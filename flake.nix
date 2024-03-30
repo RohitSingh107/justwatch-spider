@@ -23,18 +23,35 @@
 
       default = pkgs.mkShell {
         buildInputs = with pkgs; [
+          postgresql
           python312Packages.scrapy
           python312Packages.ipython
           python312Packages.httpx
           python312Packages.numpy
+          python312Packages.psycopg2
           python312Packages.autopep8
           python312Packages.black
         ];
 
+
         shellHook = ''
 
           echo "Welcome to nix shell."
+          export PGHOST=$PWD/postgres
+          export PGDATA=$PGHOST/data
+          export PGDATABASE=postgres
+          export PGLOG=$PGHOST/postgres.log
 
+          mkdir -p $PGHOST
+
+          if [ ! -d $PGDATA ]; then
+            initdb --auth=trust --no-locale --encoding=UTF8
+          fi
+
+          if ! pg_ctl status
+          then
+            pg_ctl start -l $PGLOG -o "--unix_socket_directories='$PGHOST' --listen_addresses=localhost"
+          fi
         '';
       };
 

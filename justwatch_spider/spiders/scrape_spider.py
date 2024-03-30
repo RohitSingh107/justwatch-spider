@@ -27,14 +27,15 @@ class ScrapeSpiderSpider(scrapy.Spider):
         access_token = r['access_token']
 
         count = 165
-        curls = (get_sorting_curl(access_token, count, sort_by) for sort_by in ["IMDB_SCORE", "POPULAR", "TMDB_POPULARITY"])
+        curls = ((get_sorting_curl(access_token, count, sort_by), sort_by) for sort_by in ["IMDB_SCORE", "POPULAR", "TMDB_POPULARITY"])
 
-        for c in curls:
-            yield scrapy.Request.from_curl(curl_command=c, callback = self.parse)
+        for c, sort_by in curls:
+            yield scrapy.Request.from_curl(curl_command=c, callback = self.parse, cb_kwargs = {"sort_by" : sort_by} )
 
 
 
-    def parse(self, response):
+    def parse(self, response, **kwargs):
         print("Parse function is called")
-        print("response is", response)
-        pass
+        data = response.json()
+        for e in data["data"]["titleListV2"]["edges"]:
+            yield { "TITLE" : e["node"]["content"]["title"], "SORTED BY" : kwargs["sort_by"]}
