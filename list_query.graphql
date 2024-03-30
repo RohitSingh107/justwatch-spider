@@ -1,0 +1,155 @@
+
+query GetTitleListV2(
+  $country: Country!
+  $titleListFilter: TitleFilter
+  $titleListSortBy: TitleListSortingV2! = LAST_ADDED
+  $titleListType: TitleListTypeV2!
+  $titleListAfterCursor: String
+  $watchNowFilter: WatchNowOfferFilter!
+  $first: Int! = 10
+  $language: Language!
+  $sortRandomSeed: Int! = 0
+  $profile: PosterProfile
+  $backdropProfile: BackdropProfile
+  $format: ImageFormat
+  $platform: Platform! = WEB
+  $includeOffers: Boolean = false
+) {
+  titleListV2(
+    after: $titleListAfterCursor
+    country: $country
+    filter: $titleListFilter
+    sortBy: $titleListSortBy
+    first: $first
+    titleListType: $titleListType
+    sortRandomSeed: $sortRandomSeed
+  ) {
+    totalCount
+    pageInfo {
+      startCursor
+      endCursor
+      hasPreviousPage
+      hasNextPage
+      __typename
+    }
+    edges {
+      ...WatchlistTitleGraphql
+      __typename
+    }
+    __typename
+  }
+}
+fragment WatchlistTitleGraphql on TitleListEdgeV2 {
+  cursor
+  node {
+    id
+    objectId
+    objectType
+    offerCount(country: $country, platform: $platform)
+    offers(country: $country, platform: $platform)
+      @include(if: $includeOffers) {
+      id
+      presentationType
+      monetizationType
+      retailPrice(language: $language)
+      type
+      package {
+        id
+        packageId
+        clearName
+        __typename
+      }
+      standardWebURL
+      elementCount
+      deeplinkRoku: deeplinkURL(platform: ROKU_OS)
+      __typename
+    }
+    content(country: $country, language: $language) {
+      title
+      fullPath
+      originalReleaseYear
+      shortDescription
+      scoring {
+        imdbScore
+        imdbVotes
+        tmdbScore
+        tmdbPopularity
+        __typename
+      }
+      posterUrl(profile: $profile, format: $format)
+      backdrops(profile: $backdropProfile, format: $format) {
+        backdropUrl
+        __typename
+      }
+      upcomingReleases(releaseTypes: [DIGITAL]) {
+        releaseDate
+        __typename
+      }
+      isReleased
+      __typename
+    }
+    likelistEntry {
+      createdAt
+      __typename
+    }
+    dislikelistEntry {
+      createdAt
+      __typename
+    }
+    watchlistEntryV2 {
+      createdAt
+      __typename
+    }
+    customlistEntries {
+      createdAt
+      __typename
+    }
+    watchNowOffer(
+      country: $country
+      platform: $platform
+      filter: $watchNowFilter
+    ) {
+      id
+      standardWebURL
+      package {
+        id
+        packageId
+        clearName
+        __typename
+      }
+      retailPrice(language: $language)
+      retailPriceValue
+      currency
+      lastChangeRetailPriceValue
+      presentationType
+      monetizationType
+      availableTo
+      __typename
+    }
+    ... on Movie {
+      seenlistEntry {
+        createdAt
+        __typename
+      }
+      __typename
+    }
+    ... on Show {
+      tvShowTrackingEntry {
+        createdAt
+        __typename
+      }
+      seenState(country: $country) {
+        seenEpisodeCount
+        releasedEpisodeCount
+        progress
+        caughtUp
+        lastSeenEpisodeNumber
+        lastSeenSeasonNumber
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+  __typename
+}
