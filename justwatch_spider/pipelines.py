@@ -12,7 +12,7 @@ class JustwatchSpiderPipeline:
     def process_item(self, item, spider):
         return item
 
-class SavingToPostgresPipeline(object):
+class SavingSortingsToPostgresPipeline(object):
 
     def __init__(self):
         self.conn = psycopg2.connect(

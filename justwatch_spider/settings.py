@@ -62,10 +62,10 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   # "justwatch_spider.pipelines.JustwatchSpiderPipeline": 300,
-   "justwatch_spider.pipelines.SavingToPostgresPipeline": 300,
-}
+# ITEM_PIPELINES = {
+#    # "justwatch_spider.pipelines.JustwatchSpiderPipeline": 300,
+#    "justwatch_spider.pipelines.SavingToPostgresPipeline": 300,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
