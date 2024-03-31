@@ -14,7 +14,7 @@ curl 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=
 
 def get_access_token_curl(refreshToken: str):
     return f"""
-curl 'https://securetoken.googleapis.com/v1/token?key=AIzaSyDv6JIzdDvbTBS-JWdR4Kl22UvgWGAyuo8' \
+curl 'https://securetoken.googleapis.com/v1/token?key={API_KEY}' \
   -X POST \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   --data-raw 'grant_type=refresh_token&refresh_token={refreshToken}'
