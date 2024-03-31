@@ -29,6 +29,7 @@
           python312Packages.httpx
           python312Packages.numpy
           python312Packages.psycopg2
+          python312Packages.pycountry
           python312Packages.autopep8
           python312Packages.black
         ];

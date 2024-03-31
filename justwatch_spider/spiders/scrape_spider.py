@@ -8,11 +8,11 @@ class ScrapeSpiderSpider(scrapy.Spider):
     name = "scrape_spider"
     allowed_domains = ["justwatch.com", "identitytoolkit.googleapis.com", "securetoken.googleapis.com"]
 
-    # custom_settings = {
-    #     'ITEM_PIPELINES': {
-    #         'justwatch_spider.pipelines.SavingSortingsToPostgresPipeline': 300
-    #     }
-    # }
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'justwatch_spider.pipelines.SavingWatchListToPostgresPipeline': 400
+        }
+    }
 
     def start_requests(self):
         c = get_refresh_token_curl()
@@ -34,20 +34,20 @@ class ScrapeSpiderSpider(scrapy.Spider):
         access_token = r['access_token']
 
         count = 165
-        sort_by = "IMDB_SCORE"
-        list_type = "WATCHLIST"
 
-        headers = get_headers(access_token)
-        json_data = get_body(count, sort_by, list_type)
+        for sort_by, list_type in (("RELEASE_YEAR", "WATCHLIST"), ("LAST_ADDED", "SEENLIST")):
 
-        body = json.dumps(json_data)
+            headers = get_headers(access_token)
+            json_data = get_body(count, sort_by, list_type)
 
-        yield scrapy.Request(method='POST', body = body, headers=headers, url= 'https://apis.justwatch.com/graphql', callback = self.parse)
+            body = json.dumps(json_data)
+
+            yield scrapy.Request(method='POST', body = body, headers=headers, url= 'https://apis.justwatch.com/graphql', callback = self.parse, cb_kwargs= {"list_type" : list_type})
 
 
     def parse(self, response, **kwargs):
-        print("Parse function is called")
         data = response.json()
+
 
         for e in data["data"]["titleListV2"]["edges"]:
 
@@ -57,12 +57,13 @@ class ScrapeSpiderSpider(scrapy.Spider):
             title["title"] = e["node"]["content"]["title"]
             title["runtime"] = e["node"]["content"]["runtime"]
             title["year"] = e["node"]["content"]["originalReleaseYear"]
-            title["objectType"] = e["node"]["objectType"]
+            title["object_type"] = e["node"]["objectType"]
             title["imdb_score"] = e["node"]["content"]["scoring"]["imdbScore"]
             title["imdb_votes"] = e["node"]["content"]["scoring"]["imdbVotes"]
             title["tmdb_score"] = e["node"]["content"]["scoring"]["tmdbScore"]
             title["tmdb_popularity"] = e["node"]["content"]["scoring"]["tmdbPopularity"]
             title["credits"] = e["node"]["content"]["credits"]
             title["countries"] = e["node"]["content"]["productionCountries"]
+            title["list_type"] = kwargs["list_type"]
 
             yield title
