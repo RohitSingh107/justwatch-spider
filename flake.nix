@@ -24,6 +24,7 @@
       default = pkgs.mkShell {
         buildInputs = with pkgs; [
           postgresql
+          sleek # sql formatting
           python312Packages.scrapy
           python312Packages.ipython
           python312Packages.httpx
