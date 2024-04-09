@@ -15,7 +15,7 @@ class JustwatchSpiderItem(scrapy.Item):
 
 def serialize_null(value):
     if not value or value == 'null':
-        return 0
+        return 1
     return value
 
 
