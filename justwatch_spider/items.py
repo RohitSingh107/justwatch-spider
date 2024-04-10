@@ -31,5 +31,6 @@ class TitleItem(scrapy.Item):
     tmdb_score = scrapy.Field(serializer = serialize_null)
     tmdb_popularity = scrapy.Field()
     credits = scrapy.Field()
+    genres = scrapy.Field()
     countries = scrapy.Field()
     list_type = scrapy.Field()

@@ -56,6 +56,7 @@ class ScrapeSpiderSpider(scrapy.Spider):
             title["id"] = e["node"]["id"]
             title["title"] = e["node"]["content"]["title"]
             title["runtime"] = e["node"]["content"]["runtime"]
+            title["genres"] = e["node"]["content"]["genres"]
             title["year"] = e["node"]["content"]["originalReleaseYear"]
             title["object_type"] = e["node"]["objectType"]
             title["imdb_score"] = e["node"]["content"]["scoring"]["imdbScore"]

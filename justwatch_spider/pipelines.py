@@ -97,9 +97,11 @@ class SavingWatchListToPostgresPipeline(object):
         self.cur.execute("DROP TABLE IF EXISTS seenlist CASCADE;")
         self.cur.execute("DROP TABLE IF EXISTS countries CASCADE;")
         self.cur.execute("DROP TABLE IF EXISTS directors CASCADE;")
+        self.cur.execute("DROP TABLE IF EXISTS genres CASCADE;")
         self.cur.execute("DROP TABLE IF EXISTS casts CASCADE;")
         self.cur.execute("DROP TABLE IF EXISTS movie_cast CASCADE;")
         self.cur.execute("DROP TABLE IF EXISTS movie_directors CASCADE;")
+        self.cur.execute("DROP TABLE IF EXISTS movie_genres CASCADE;")
         self.cur.execute("DROP TABLE IF EXISTS movie_countries CASCADE;")
 
         self.cur.execute("""
@@ -134,6 +136,12 @@ class SavingWatchListToPostgresPipeline(object):
         CREATE TABLE countries(
             id TEXT PRIMARY KEY, 
             name TEXT
+        );
+        """)
+
+        self.cur.execute("""
+        CREATE TABLE genres(
+            name TEXT PRIMARY KEY 
         );
         """)
 
@@ -179,6 +187,16 @@ class SavingWatchListToPostgresPipeline(object):
         );
         """)
 
+        self.cur.execute("""
+        CREATE TABLE movie_genres(
+            name TEXT NOT NULL, 
+            movie TEXT NOT NULL,
+            reference_type TEXT NOT NULL,
+            FOREIGN KEY (name) REFERENCES genres(name),
+            PRIMARY KEY (name, movie)
+        );
+        """)
+
         self.conn.commit()
 
 
@@ -200,6 +218,10 @@ class SavingWatchListToPostgresPipeline(object):
             else:
                 self.cur.execute(f"INSERT INTO casts VALUES ('{c["name"].replace("'", "''")}') ON CONFLICT (name) DO NOTHING;")
                 self.cur.execute(f"INSERT INTO movie_cast VALUES('{c["name"].replace("'", "''")}', '{item["id"]}', '{item["list_type"]}') ON CONFLICT (name, movie) DO NOTHING;")
+
+        for g in item["genres"]:
+            self.cur.execute(f"INSERT INTO genres VALUES ('{g["shortName"]}') ON CONFLICT (name) DO NOTHING;")
+            self.cur.execute(f"INSERT INTO movie_genres VALUES('{g["shortName"]}', '{item["id"]}', '{item["list_type"]}') ON CONFLICT (name, movie) DO NOTHING;")
 
 
 
