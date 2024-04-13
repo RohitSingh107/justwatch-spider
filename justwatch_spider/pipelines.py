@@ -114,7 +114,9 @@ class SavingWatchListToPostgresPipeline(object):
             imdb_score REAL,
             imdb_votes INTEGER,
             tmdb_score REAL,
-            tmdb_popularity REAL
+            tmdb_popularity REAL,
+            popularity_rank INTEGER,
+            jw_rating REAL
         );
         """)
 
@@ -128,7 +130,9 @@ class SavingWatchListToPostgresPipeline(object):
             imdb_score REAL,
             imdb_votes INTEGER,
             tmdb_score REAL,
-            tmdb_popularity REAL
+            tmdb_popularity REAL,
+            popularity_rank INTEGER,
+            jw_rating REAL
         );
         """)
 
@@ -203,9 +207,9 @@ class SavingWatchListToPostgresPipeline(object):
     def process_item(self, item, spider):
 
         if item["list_type"] == "WATCHLIST":
-            self.cur.execute(f"INSERT INTO watchlist VALUES ('{item["id"]}', '{item["title"].replace("'", "''")}', {item["runtime"]}, {item["year"]}, '{item["object_type"]}', {serialize_null(item["imdb_score"])}, {serialize_null(item["imdb_votes"])}, {serialize_null(item["tmdb_score"])}, {item["tmdb_popularity"]});")
+            self.cur.execute(f"INSERT INTO watchlist VALUES ('{item["id"]}', '{item["title"].replace("'", "''")}', {item["runtime"]}, {item["year"]}, '{item["object_type"]}', {serialize_null(item["imdb_score"])}, {serialize_null(item["imdb_votes"])}, {serialize_null(item["tmdb_score"])}, {item["tmdb_popularity"]}, {item["popularity_rank"]}, {serialize_null(item["jw_rating"])});")
         else:
-            self.cur.execute(f"INSERT INTO seenlist VALUES ('{item["id"]}', '{item["title"].replace("'", "''")}', {item["runtime"]}, {item["year"]}, '{item["object_type"]}', {serialize_null(item["imdb_score"])}, {serialize_null(item["imdb_votes"])}, {serialize_null(item["tmdb_score"])}, {item["tmdb_popularity"]});")
+            self.cur.execute(f"INSERT INTO seenlist VALUES ('{item["id"]}', '{item["title"].replace("'", "''")}', {item["runtime"]}, {item["year"]}, '{item["object_type"]}', {serialize_null(item["imdb_score"])}, {serialize_null(item["imdb_votes"])}, {serialize_null(item["tmdb_score"])}, {item["tmdb_popularity"]}, {item["popularity_rank"]}, {serialize_null(item["jw_rating"])});")
 
         for country in item["countries"]:
             self.cur.execute(f"INSERT INTO countries VALUES ('{country}', '{pycountry.countries.lookup(country).name}') ON CONFLICT (id) DO NOTHING;")

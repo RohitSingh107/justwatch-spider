@@ -30,6 +30,8 @@ class TitleItem(scrapy.Item):
     imdb_votes = scrapy.Field(serializer = serialize_null)
     tmdb_score = scrapy.Field(serializer = serialize_null)
     tmdb_popularity = scrapy.Field()
+    popularity_rank = scrapy.Field()
+    jw_rating = scrapy.Field()
     credits = scrapy.Field()
     genres = scrapy.Field()
     countries = scrapy.Field()
