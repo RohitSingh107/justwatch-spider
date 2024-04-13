@@ -1,4 +1,3 @@
-
 {
   description = "Fetching my user data from justwatch0";
 
@@ -8,33 +7,37 @@
     };
   };
 
-  outputs = {self, nixpkgs, ... }@inputs : 
-
-    let
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  } @ inputs: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-
-    in
-
-  {
-    
-
+  in {
     devShells.${system} = {
-
       default = pkgs.mkShell {
         buildInputs = with pkgs; [
           postgresql
           sleek # sql formatting
-          python312Packages.scrapy
-          python312Packages.ipython
-          python312Packages.httpx
-          python312Packages.numpy
-          python312Packages.psycopg2
-          python312Packages.pycountry
-          python312Packages.autopep8
-          python312Packages.black
-        ];
 
+          (python312.withPackages
+            (ps:
+              with ps; [
+                black
+                scrapy
+                ipython
+                httpx
+                numpy
+                psycopg2 # To Remove
+                psycopg
+                pycountry
+                autopep8
+                black
+                icecream
+                aiofiles
+              ]))
+        ];
 
         shellHook = ''
 
@@ -56,9 +59,6 @@
           fi
         '';
       };
-
     };
-
-
   };
 }
