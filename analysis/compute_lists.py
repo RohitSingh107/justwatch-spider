@@ -1,6 +1,7 @@
 import numpy as np
 from collections import defaultdict
 import aiofiles
+from icecream import ic
 
 
 async def write_to_files(file_name, content):
