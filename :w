@@ -54,15 +54,14 @@ async def get_international_sortings(cur):
         w.title;
     """
 
-    await cur.execute(q)
-    international_unordered = await cur.fetchall()
+    # await cur.execute(q)
+    # international_unordered = await cur.fetchall()
+    #
+    # all_sortings = await get_all_sortings(cur)
 
-    all_sortings = await get_all_sortings(cur)
 
-
-    # c, all_sortings = await asyncio.gather(cur.execute(q), get_all_sortings(cur))
-
-    international_unordered = await cur.fetchall()
+    c, all_sortings = await asyncio.gather(cur.execute(q), get_all_sortings(cur))
+    international_unordered = await c.fetchall()
 
     international_unordered = list(map(lambda x: x[0], international_unordered))
 

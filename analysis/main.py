@@ -21,9 +21,9 @@ async def main():
 
             async with asyncio.TaskGroup() as tg:
 
-                tg.create_task(average_rank(all_sortings))
-                tg.create_task(combined_ranks_unweighted(all_sortings))
-                tg.create_task(combined_ranks_weighted(all_sortings, all_imdb_score))
+                tg.create_task(average_rank("analysis/output/", all_sortings))
+                tg.create_task(combined_ranks_unweighted("analysis/output/" , all_sortings))
+                tg.create_task(combined_ranks_weighted("analysis/output/", all_sortings, all_imdb_score))
 
     print("Done")
 

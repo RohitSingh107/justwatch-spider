@@ -5,11 +5,11 @@ from icecream import ic
 
 
 async def write_to_files(file_name, content):
-    async with aiofiles.open("analysis/output/" + file_name, "w") as f:
+    async with aiofiles.open(file_name, "w") as f:
         await f.write('\n'.join(content))
 
 
-async def average_rank(lists):
+async def average_rank(prefix: str, lists):
     # Create a dictionary to store the ranks
     rank_dict = {el: [] for lst in lists for el in lst}
 
@@ -23,12 +23,12 @@ async def average_rank(lists):
 
     # Create a new list sorted by average rank
     new_list = sorted(avg_ranks, key=avg_ranks.get)
-    await write_to_files("average_rank.txt", new_list)
+    await write_to_files(prefix + "average_rank.txt", new_list)
 
     return new_list
 
 
-async def combined_ranks_unweighted(lists):
+async def combined_ranks_unweighted(prefix: str, lists):
     # Create a dictionary to hold the total points for each item
     points = defaultdict(int)
 
@@ -39,11 +39,11 @@ async def combined_ranks_unweighted(lists):
 
     # Create the combined list
     combined_list = sorted(points, key=points.get, reverse=True)
-    await write_to_files('combined_ranks_unweighted.txt', combined_list)
+    await write_to_files(prefix + 'combined_ranks_unweighted.txt', combined_list)
     return combined_list
 
 
-async def combined_ranks_weighted(lists, imdb_score_data):
+async def combined_ranks_weighted(prefix, lists, imdb_score_data):
     # Create a dictionary to hold the total points for each item
     points = defaultdict(int)
 
@@ -57,5 +57,5 @@ async def combined_ranks_weighted(lists, imdb_score_data):
 
     # Create the combined list
     combined_list = sorted(points, key=points.get, reverse=True)
-    await write_to_files('combined_ranks_weighted.txt', combined_list)
+    await write_to_files(prefix + 'combined_ranks_weighted.txt', combined_list)
     return combined_list
