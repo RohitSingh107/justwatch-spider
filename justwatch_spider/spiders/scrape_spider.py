@@ -33,12 +33,13 @@ class ScrapeSpiderSpider(scrapy.Spider):
         r = response.json()
         access_token = r['access_token']
 
-        count = 165
+        COUNT = 165
+        COUNTRY = "US"
 
         for sort_by, list_type in (("RELEASE_YEAR", "WATCHLIST"), ("LAST_ADDED", "SEENLIST")):
 
             headers = get_headers(access_token)
-            json_data = get_body(count, sort_by, list_type)
+            json_data = get_body(COUNT, sort_by, list_type, COUNTRY)
 
             body = json.dumps(json_data)
 

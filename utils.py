@@ -22,7 +22,7 @@ curl 'https://securetoken.googleapis.com/v1/token?key={API_KEY}' \
 """
 
 
-def get_sorting_curl(token: str, count: int, sort_by: str):
+def get_sorting_curl(token: str, count: int, sort_by: str, country : str):
     return f"""
 curl 'https://apis.justwatch.com/graphql' \
   -X POST \
@@ -50,7 +50,7 @@ curl 'https://apis.justwatch.com/graphql' \
     }},
     "watchNowFilter": {{ "packages": [], "monetizationTypes": [] }},
     "language": "en",
-    "country": "IN",
+    "country": "{country}",
     "titleListType": "WATCHLIST",
     "titleListAfterCursor": ""
   }},
@@ -66,7 +66,7 @@ def get_headers(token):
     }
 
 
-def get_body(count : int, sort_by : str, list_type : str):
+def get_body(count : int, sort_by : str, list_type : str, country : str):
     return {
         'operationName': 'GetTitleListV2',
         'variables': {
@@ -92,7 +92,7 @@ def get_body(count : int, sort_by : str, list_type : str):
                 'monetizationTypes': [],
             },
             'language': 'en',
-            'country': 'IN',
+            'country': country,
             'titleListType': list_type,
             'titleListAfterCursor': '',
         },

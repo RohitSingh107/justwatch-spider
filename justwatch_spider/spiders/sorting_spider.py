@@ -33,8 +33,10 @@ class SortingSpiderSpider(scrapy.Spider):
         r = response.json()
         access_token = r['access_token']
 
-        count = 165
-        curls = ((get_sorting_curl(access_token, count, sort_by), sort_by) for sort_by in ["IMDB_SCORE", "POPULAR", "TMDB_POPULARITY"])
+        COUNT = 165
+        COUNTRY = "US"
+
+        curls = ((get_sorting_curl(access_token, COUNT, sort_by, COUNTRY), sort_by) for sort_by in ["IMDB_SCORE", "POPULAR", "TMDB_POPULARITY"])
 
         for c, sort_by in curls:
             yield scrapy.Request.from_curl(curl_command=c, callback = self.parse, cb_kwargs = {"sort_by" : sort_by} )
