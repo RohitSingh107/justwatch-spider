@@ -8,6 +8,7 @@
 from itemadapter import ItemAdapter
 import psycopg2
 import pycountry
+from utils import expand_genre
 
 # class JustwatchSpiderPipeline:
 #     def process_item(self, item, spider):
@@ -223,9 +224,10 @@ class SavingWatchListToPostgresPipeline(object):
                 self.cur.execute(f"INSERT INTO casts VALUES ('{c["name"].replace("'", "''")}') ON CONFLICT (name) DO NOTHING;")
                 self.cur.execute(f"INSERT INTO movie_cast VALUES('{c["name"].replace("'", "''")}', '{item["id"]}', '{item["list_type"]}') ON CONFLICT (name, movie) DO NOTHING;")
 
-        for g in item["genres"]:
-            self.cur.execute(f"INSERT INTO genres VALUES ('{g["shortName"]}') ON CONFLICT (name) DO NOTHING;")
-            self.cur.execute(f"INSERT INTO movie_genres VALUES('{g["shortName"]}', '{item["id"]}', '{item["list_type"]}') ON CONFLICT (name, movie) DO NOTHING;")
+        for genre in item["genres"]:
+            g = expand_genre(genre["shortName"]) 
+            self.cur.execute(f"INSERT INTO genres VALUES ('{g}') ON CONFLICT (name) DO NOTHING;")
+            self.cur.execute(f"INSERT INTO movie_genres VALUES('{g}', '{item["id"]}', '{item["list_type"]}') ON CONFLICT (name, movie) DO NOTHING;")
 
 
 

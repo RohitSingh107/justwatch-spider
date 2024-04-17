@@ -99,3 +99,48 @@ def get_body(count : int, sort_by : str, list_type : str, country : str):
         'query': '\nquery GetTitleListV2(\n  $country: Country!\n  $titleListFilter: TitleFilter\n  $titleListSortBy: TitleListSortingV2! = LAST_ADDED\n  $titleListType: TitleListTypeV2!\n  $titleListAfterCursor: String\n    $first: Int! = 10\n  $language: Language!\n  $sortRandomSeed: Int! = 0\n      $platform: Platform! = WEB\n  $includeOffers: Boolean = false\n) {\n  titleListV2(\n    after: $titleListAfterCursor\n    country: $country\n    filter: $titleListFilter\n    sortBy: $titleListSortBy\n    first: $first\n    titleListType: $titleListType\n    sortRandomSeed: $sortRandomSeed\n  ) {\n    totalCount\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n          }\n    edges {\n      ...WatchlistTitleGraphql\n          }\n      }\n}\nfragment WatchlistTitleGraphql on TitleListEdgeV2 {\n  cursor\n  node {\n    id\n    objectId\n    objectType\n       offers(country: $country, platform: $platform)\n      @include(if: $includeOffers) {\n      id\n      presentationType\n      monetizationType\n      retailPrice(language: $language)\n      type\n      package {\n        id\n        packageId\n        clearName\n              }\n      standardWebURL\n      elementCount\n      deeplinkRoku: deeplinkURL(platform: ROKU_OS)\n          }\n   popularityRank(country: $country) {\n          rank\n  }\n    content(country: $country, language: $language) {\n      title\n     runtime\n    genres {\n            shortName\n         }\n     credits { role name }\n     productionCountries\n       originalReleaseYear\n      shortDescription\n      scoring {\n        imdbScore\n        imdbVotes\n        tmdbScore\n        tmdbPopularity\n      jwRating\n        }\n                      }\n      }\n  }\n\n\n',
     }
 
+
+
+
+def expand_genre(genre : str):
+    match genre:
+        case "drm":
+            return "Drama"
+        case "trl":
+            return "Mystry & Thriller"
+        case "cmy":
+            return "Comedy"
+        case "rma":
+            return "Romance"
+        case "act":
+            return "Action"
+        case "crm":
+            return "Crime"
+        case "scf":
+            return "Science-Fiction"
+        case "hrr":
+            return "Horror"
+        case "eur":
+            return "Made in Europe"
+        case "fnt":
+            return "Fantasy"
+        case "hst":
+            return "History"
+        case "doc":
+            return "Documentary"
+        case "war":
+            return "War & Military"
+        case "msc":
+            return "Music"
+        case "wsn":
+            return "Western"
+        case "fml":
+            return "Family"
+        case "rly":
+            return "Reality TV"
+        case "spt":
+            return "Sport"
+        case "ani":
+            return "Animation"
+        case _:
+            return genre
