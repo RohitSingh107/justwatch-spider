@@ -46,7 +46,9 @@ curl 'https://apis.justwatch.com/graphql' \
       "packages": [],
       "excludeIrrelevantTitles": false,
       "presentationTypes": [],
-      "monetizationTypes": []
+      "monetizationTypes": [],
+      "subgenres": [],
+      "includeTitlesWithoutUrl" : true
     }},
     "watchNowFilter": {{ "packages": [], "monetizationTypes": [] }},
     "language": "en",
@@ -86,6 +88,8 @@ def get_body(count : int, sort_by : str, list_type : str, country : str):
                 'excludeIrrelevantTitles': False,
                 'presentationTypes': [],
                 'monetizationTypes': [],
+                'subgenres': [],
+                'includeTitlesWithoutUrl' : True,
             },
             'watchNowFilter': {
                 'packages': [],

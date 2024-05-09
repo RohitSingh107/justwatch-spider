@@ -34,7 +34,7 @@ class SortingSpiderSpider(scrapy.Spider):
         access_token = r['access_token']
 
         COUNT = 165
-        COUNTRY = "US"
+        COUNTRY = "IN"
 
         curls = ((get_sorting_curl(access_token, COUNT, sort_by, COUNTRY), sort_by) for sort_by in ["IMDB_SCORE", "POPULAR", "TMDB_POPULARITY"])
 

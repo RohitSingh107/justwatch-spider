@@ -34,7 +34,7 @@ class ScrapeSpiderSpider(scrapy.Spider):
         access_token = r['access_token']
 
         COUNT = 165
-        COUNTRY = "US"
+        COUNTRY = "IN"
 
         for sort_by, list_type in (("RELEASE_YEAR", "WATCHLIST"), ("LAST_ADDED", "SEENLIST")):
 
