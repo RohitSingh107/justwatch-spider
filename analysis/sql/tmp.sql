@@ -1,7 +1,17 @@
 SELECT
-    title
+    w.title
 FROM
-    movie_genres
-JOIN watchlist ON watchlist.id = movie_genres.movie
+    watchlist w
+    LEFT JOIN movie_countries mc ON w.id = mc.movie
+    LEFT JOIN countries c ON mc.country_id = c.id
 WHERE
-    name = 'Animation';
+    w.id NOT IN (
+        SELECT
+            DISTINCT movie
+        FROM
+            movie_countries
+        WHERE
+            country_id IN ('IN', 'US')
+    )
+GROUP BY
+    w.title;

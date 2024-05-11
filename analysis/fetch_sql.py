@@ -3,13 +3,14 @@ from icecream import ic
 
 ALL_SORTINGS = """
 SELECT
-  sorted_by_popularity.rank, sorted_by_imdb_score.title as imdb_score, sorted_by_popularity.title as popularity, sorted_by_tmdb_popularity.title as tmdb_popularity
-FROM sorted_by_imdb_score
-JOIN sorted_by_popularity
-  ON sorted_by_imdb_score.rank = sorted_by_popularity.rank
-JOIN sorted_by_tmdb_popularity
-  ON sorted_by_tmdb_popularity.rank = sorted_by_popularity.rank;
-
+    sorted_by_popularity.rank,
+    sorted_by_imdb_score.title || ' ' || sorted_by_imdb_score.year AS imdb_score,
+    sorted_by_popularity.title || ' ' || sorted_by_popularity.year AS popularity,
+    sorted_by_tmdb_popularity.title || ' ' || sorted_by_tmdb_popularity.year AS tmdb_popularity
+FROM
+    sorted_by_imdb_score
+    JOIN sorted_by_popularity ON sorted_by_imdb_score.rank = sorted_by_popularity.rank
+    JOIN sorted_by_tmdb_popularity ON sorted_by_tmdb_popularity.rank = sorted_by_popularity.rank;
 """
 
 
@@ -27,7 +28,7 @@ async def get_all_sortings(cur):
 
 
 async def get_all_imdb_score_data(cur):
-    await cur.execute("SELECT title, imdb_score FROM watchlist ORDER BY imdb_score DESC;")
+    await cur.execute("SELECT title || ' ' || year AS title, imdb_score FROM watchlist ORDER BY imdb_score DESC;")
     imdb_score_data = await cur.fetchall()
     return imdb_score_data
 
@@ -36,7 +37,7 @@ async def get_international_sortings(cur):
 
     q = """
     SELECT
-        w.title
+        w.title || ' ' || w.year AS title
     FROM
         watchlist w
         LEFT JOIN movie_countries mc ON w.id = mc.movie
@@ -51,7 +52,10 @@ async def get_international_sortings(cur):
                 country_id IN ('IN', 'US')
         )
     GROUP BY
-        w.title;
+        w.title,
+        w.year
+    ORDER BY
+        title;
     """
 
     await cur.execute(q)
@@ -70,7 +74,7 @@ async def get_international_imdb_score_data(cur):
 
     q = """
     SELECT
-        w.title
+        w.title || ' ' || w.year AS title
     FROM
         watchlist w
         LEFT JOIN movie_countries mc ON w.id = mc.movie
@@ -85,9 +89,11 @@ async def get_international_imdb_score_data(cur):
                 country_id IN ('IN', 'US')
         )
     GROUP BY
-        w.title;
+        w.title,
+        w.year
+    ORDER BY
+        title;
     """
-
     await cur.execute(q)
 
     international_unordered = await cur.fetchall()

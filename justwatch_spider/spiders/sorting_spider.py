@@ -47,4 +47,4 @@ class SortingSpiderSpider(scrapy.Spider):
         print("Parse function is called")
         data = response.json()
         for e in data["data"]["titleListV2"]["edges"]:
-            yield { "TITLE" : e["node"]["content"]["title"], "SORTED BY" : kwargs["sort_by"]}
+            yield { "TITLE" : e["node"]["content"]["title"], "YEAR":  e["node"]["content"]["originalReleaseYear"], "SORTED BY" : kwargs["sort_by"]}

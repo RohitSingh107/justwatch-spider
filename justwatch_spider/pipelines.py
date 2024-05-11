@@ -35,21 +35,24 @@ class SavingSortingsToPostgresPipeline(object):
         self.cur.execute("""
         CREATE TABLE sorted_by_imdb_score(
             rank SERIAL PRIMARY KEY, 
-            title TEXT
+            title TEXT,
+            year INTEGER
         );
         """)
         ## Create table
         self.cur.execute("""
         CREATE TABLE sorted_by_popularity(
             rank SERIAL PRIMARY KEY, 
-            title TEXT
+            title TEXT,
+            year INTEGER
         );
         """)
         ## Create table
         self.cur.execute("""
         CREATE TABLE sorted_by_tmdb_popularity(
             rank SERIAL PRIMARY KEY, 
-            title TEXT
+            title TEXT,
+            year INTEGER
         );
         """)
 
@@ -59,13 +62,13 @@ class SavingSortingsToPostgresPipeline(object):
     def process_item(self, item, spider):
 
         if item["SORTED BY"] == "IMDB_SCORE":
-            self.cur.execute(f"INSERT INTO sorted_by_imdb_score (title) VALUES ('{item["TITLE"].replace("'", "''")}');")
+            self.cur.execute(f"INSERT INTO sorted_by_imdb_score (title, year) VALUES ('{item["TITLE"].replace("'", "''")}', '{item["YEAR"]}');")
 
         if item["SORTED BY"] == "POPULAR":
-            self.cur.execute(f"INSERT INTO sorted_by_popularity (title) VALUES ('{item["TITLE"].replace("'", "''")}');")
+            self.cur.execute(f"INSERT INTO sorted_by_popularity (title, year) VALUES ('{item["TITLE"].replace("'", "''")}', '{item["YEAR"]}');")
 
         if item["SORTED BY"] == "TMDB_POPULARITY":
-            self.cur.execute(f"INSERT INTO sorted_by_tmdb_popularity (title) VALUES ('{item["TITLE"].replace("'", "''")}');")
+            self.cur.execute(f"INSERT INTO sorted_by_tmdb_popularity (title, year) VALUES ('{item["TITLE"].replace("'", "''")}', '{item["YEAR"]}');")
 
 
         self.conn.commit()
