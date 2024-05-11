@@ -1,3 +1,5 @@
 Global variables in settings.py
 shift from curl string to request body
+date with title
+hindi availability
 
