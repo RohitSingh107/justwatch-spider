@@ -4,6 +4,9 @@ import json
 from utils import get_refresh_token_curl, get_access_token_curl, get_headers, get_body
 from justwatch_spider.items import TitleItem
 
+COUNT = 165
+COUNTRY = "IN"
+
 class ScrapeSpiderSpider(scrapy.Spider):
     name = "scrape_spider"
     allowed_domains = ["justwatch.com", "identitytoolkit.googleapis.com", "securetoken.googleapis.com"]
@@ -32,9 +35,6 @@ class ScrapeSpiderSpider(scrapy.Spider):
 
         r = response.json()
         access_token = r['access_token']
-
-        COUNT = 165
-        COUNTRY = "IN"
 
         for sort_by, list_type in (("RELEASE_YEAR", "WATCHLIST"), ("LAST_ADDED", "SEENLIST")):
 

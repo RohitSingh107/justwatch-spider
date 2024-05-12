@@ -3,6 +3,8 @@
 import scrapy
 from utils import get_refresh_token_curl, get_access_token_curl, get_sorting_curl
 
+COUNT = 165
+COUNTRY = "IN"
 
 class SortingSpiderSpider(scrapy.Spider):
     name = "sorting_spider"
@@ -10,7 +12,7 @@ class SortingSpiderSpider(scrapy.Spider):
 
     custom_settings = {
         'ITEM_PIPELINES': {
-            'justwatch_spider.pipelines.SavingSortingsToPostgresPipeline': 300
+            'justwatch_spider.pipelines.SavingSortingsToPostgresPipeline': 325
         }
     }
 
@@ -33,8 +35,6 @@ class SortingSpiderSpider(scrapy.Spider):
         r = response.json()
         access_token = r['access_token']
 
-        COUNT = 165
-        COUNTRY = "IN"
 
         curls = ((get_sorting_curl(access_token, COUNT, sort_by, COUNTRY), sort_by) for sort_by in ["IMDB_SCORE", "POPULAR", "TMDB_POPULARITY"])
 
@@ -44,7 +44,6 @@ class SortingSpiderSpider(scrapy.Spider):
 
 
     def parse(self, response, **kwargs):
-        print("Parse function is called")
         data = response.json()
         for e in data["data"]["titleListV2"]["edges"]:
             yield { "TITLE" : e["node"]["content"]["title"], "YEAR":  e["node"]["content"]["originalReleaseYear"], "SORTED BY" : kwargs["sort_by"]}

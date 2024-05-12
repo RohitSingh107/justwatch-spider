@@ -232,10 +232,43 @@ class SavingWatchListToPostgresPipeline(object):
             self.cur.execute(f"INSERT INTO genres VALUES ('{g}') ON CONFLICT (name) DO NOTHING;")
             self.cur.execute(f"INSERT INTO movie_genres VALUES('{g}', '{item["id"]}', '{item["list_type"]}') ON CONFLICT (name, movie) DO NOTHING;")
 
+        self.conn.commit()
+        return item
+
+    def close_spider(self, spider):
+        # # Close cursor & connection to database
+        self.cur.close()
+        self.conn.close()
 
 
 
 
+
+class SavingHindiListToPostgresPipeline(object):
+
+    def __init__(self):
+        self.conn = psycopg2.connect(
+            host="localhost", database="postgres", user="rohits"
+        )
+
+        ## Create cursor, used to execute commands
+        self.cur = self.conn.cursor()
+
+        # Drop existing data
+        self.cur.execute("DROP TABLE IF EXISTS hindi_confirmed;")
+
+        ## Create table
+        self.cur.execute("""
+        CREATE TABLE hindi_confirmed(
+            title TEXT PRIMARY KEY
+        );
+        """)
+        self.conn.commit()
+
+
+    def process_item(self, item, spider):
+
+        self.cur.execute(f"INSERT INTO hindi_confirmed (title) VALUES ('{item["TITLE"].replace("'", "''")}');")
         self.conn.commit()
         return item
 

@@ -1,6 +1,6 @@
 from secret import API_KEY, EMAIL, PASSWORD
 
-# From curl is not a good idea because of {} ans syntax errors
+# From curl is not a good idea because of {} and syntax errors
 
 
 def get_refresh_token_curl():
