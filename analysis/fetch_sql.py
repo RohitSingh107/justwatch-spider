@@ -103,3 +103,8 @@ async def get_international_imdb_score_data(cur):
     international_unordered = list(map(lambda x: x[0], international_unordered))
 
     return list(filter(lambda x : x[0] in international_unordered, all_imdb_score_data))
+
+async def get_hindi_list(cur):
+    await cur.execute("select * from hindi_confirmed;")
+    hindi_list = await cur.fetchall()
+    return set(map(lambda x : x[0], hindi_list))
