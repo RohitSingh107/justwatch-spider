@@ -40,6 +40,7 @@ class HindiListSpider(scrapy.Spider):
                     'excludeIrrelevantTitles': False,
                     'presentationTypes': [],
                     'monetizationTypes': [],
+                    'includeTitlesWithoutUrl' : True,
                 },
                 'watchNowFilter': {
                     'packages': [],
