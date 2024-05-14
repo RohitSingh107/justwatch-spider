@@ -1,3 +1,2 @@
 shift from curl string to request body
-hindi availability
 
