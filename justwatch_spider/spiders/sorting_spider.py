@@ -1,14 +1,14 @@
-
-
 import scrapy
 from utils import get_refresh_token_curl, get_access_token_curl, get_sorting_curl
 
 COUNT = 165
 COUNTRY = "IN"
 
+
 class SortingSpiderSpider(scrapy.Spider):
     name = "sorting_spider"
-    allowed_domains = ["justwatch.com", "identitytoolkit.googleapis.com", "securetoken.googleapis.com"]
+    allowed_domains = [
+        "justwatch.com", "identitytoolkit.googleapis.com", "securetoken.googleapis.com"]
 
     custom_settings = {
         'ITEM_PIPELINES': {
@@ -35,15 +35,22 @@ class SortingSpiderSpider(scrapy.Spider):
         r = response.json()
         access_token = r['access_token']
 
-
-        curls = ((get_sorting_curl(access_token, COUNT, sort_by, COUNTRY), sort_by) for sort_by in ["IMDB_SCORE", "POPULAR", "TMDB_POPULARITY"])
+        curls = ((get_sorting_curl(access_token, "", COUNT, sort_by, COUNTRY), sort_by)
+                 for sort_by in ["IMDB_SCORE", "POPULAR", "TMDB_POPULARITY"])
 
         for c, sort_by in curls:
-            yield scrapy.Request.from_curl(curl_command=c, callback = self.parse, cb_kwargs = {"sort_by" : sort_by} )
-
-
+            yield scrapy.Request.from_curl(curl_command=c, callback=self.parse, cb_kwargs={"sort_by": sort_by, "access_token": access_token})
 
     def parse(self, response, **kwargs):
+        sort_by = kwargs["sort_by"]
+        access_token = kwargs['access_token']
+
         data = response.json()
         for e in data["data"]["titleListV2"]["edges"]:
-            yield { "TITLE" : e["node"]["content"]["title"], "YEAR":  e["node"]["content"]["originalReleaseYear"], "SORTED BY" : kwargs["sort_by"]}
+            yield {"TITLE": e["node"]["content"]["title"], "YEAR":  e["node"]["content"]["originalReleaseYear"], "SORTED BY": sort_by}
+
+        next_page = data["data"]["titleListV2"]["pageInfo"]["hasNextPage"]
+        if next_page:
+            cur = data["data"]["titleListV2"]["pageInfo"]["endCursor"]
+            c = get_sorting_curl(access_token, cur, COUNT, sort_by, COUNTRY)
+            yield scrapy.Request.from_curl(curl_command=c, callback=self.parse, cb_kwargs={"sort_by": sort_by, "access_token": access_token})
