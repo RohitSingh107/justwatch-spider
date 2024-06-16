@@ -22,7 +22,7 @@ curl 'https://securetoken.googleapis.com/v1/token?key={API_KEY}' \
 """
 
 
-def get_sorting_curl(token: str, count: int, sort_by: str, country : str):
+def get_sorting_curl(token: str, cursor: str, count: int, sort_by: str, country: str):
     return f"""
 curl 'https://apis.justwatch.com/graphql' \
   -X POST \
@@ -54,7 +54,7 @@ curl 'https://apis.justwatch.com/graphql' \
     "language": "en",
     "country": "{country}",
     "titleListType": "WATCHLIST",
-    "titleListAfterCursor": ""
+    "titleListAfterCursor": "{cursor}"
   }},
   "query": "\\nquery GetTitleListV2(\\n  $country: Country!\\n  $titleListFilter: TitleFilter\\n  $titleListSortBy: TitleListSortingV2! = LAST_ADDED\\n  $titleListType: TitleListTypeV2!\\n  $titleListAfterCursor: String\\n  $watchNowFilter: WatchNowOfferFilter!\\n  $first: Int! = 10\\n  $language: Language!\\n  $sortRandomSeed: Int! = 0\\n  $profile: PosterProfile\\n  $backdropProfile: BackdropProfile\\n  $format: ImageFormat\\n  $platform: Platform! = WEB\\n  $includeOffers: Boolean = false\\n) {{\\n  titleListV2(\\n    after: $titleListAfterCursor\\n    country: $country\\n    filter: $titleListFilter\\n    sortBy: $titleListSortBy\\n    first: $first\\n    titleListType: $titleListType\\n    sortRandomSeed: $sortRandomSeed\\n  ) {{\\n    totalCount\\n    pageInfo {{\\n      startCursor\\n      endCursor\\n      hasPreviousPage\\n      hasNextPage\\n      __typename\\n    }}\\n    edges {{\\n      ...WatchlistTitleGraphql\\n      __typename\\n    }}\\n    __typename\\n  }}\\n}}\\nfragment WatchlistTitleGraphql on TitleListEdgeV2 {{\\n  cursor\\n  node {{\\n    id\\n    objectId\\n    objectType\\n    offerCount(country: $country, platform: $platform)\\n    offers(country: $country, platform: $platform)\\n      @include(if: $includeOffers) {{\\n      id\\n      presentationType\\n      monetizationType\\n      retailPrice(language: $language)\\n      type\\n      package {{\\n        id\\n        packageId\\n        clearName\\n        __typename\\n      }}\\n      standardWebURL\\n      elementCount\\n      deeplinkRoku: deeplinkURL(platform: ROKU_OS)\\n      __typename\\n    }}\\n    content(country: $country, language: $language) {{\\n      title\\n      fullPath\\n      originalReleaseYear\\n      shortDescription\\n      scoring {{\\n        imdbScore\\n        imdbVotes\\n        tmdbScore\\n        tmdbPopularity\\n        __typename\\n      }}\\n      posterUrl(profile: $profile, format: $format)\\n      backdrops(profile: $backdropProfile, format: $format) {{\\n        backdropUrl\\n        __typename\\n      }}\\n      upcomingReleases(releaseTypes: [DIGITAL]) {{\\n        releaseDate\\n        __typename\\n      }}\\n      isReleased\\n      __typename\\n    }}\\n    likelistEntry {{\\n      createdAt\\n      __typename\\n    }}\\n    dislikelistEntry {{\\n      createdAt\\n      __typename\\n    }}\\n    watchlistEntryV2 {{\\n      createdAt\\n      __typename\\n    }}\\n    customlistEntries {{\\n      createdAt\\n      __typename\\n    }}\\n    watchNowOffer(\\n      country: $country\\n      platform: $platform\\n      filter: $watchNowFilter\\n    ) {{\\n      id\\n      standardWebURL\\n      package {{\\n        id\\n        packageId\\n        clearName\\n        __typename\\n      }}\\n      retailPrice(language: $language)\\n      retailPriceValue\\n      currency\\n      lastChangeRetailPriceValue\\n      presentationType\\n      monetizationType\\n      availableTo\\n      __typename\\n    }}\\n    ... on Movie {{\\n      seenlistEntry {{\\n        createdAt\\n        __typename\\n      }}\\n      __typename\\n    }}\\n    ... on Show {{\\n      tvShowTrackingEntry {{\\n        createdAt\\n        __typename\\n      }}\\n      seenState(country: $country) {{\\n        seenEpisodeCount\\n        releasedEpisodeCount\\n        progress\\n        caughtUp\\n        lastSeenEpisodeNumber\\n        lastSeenSeasonNumber\\n        __typename\\n      }}\\n      __typename\\n    }}\\n    __typename\\n  }}\\n  __typename\\n}}\\n\\n\\n"
 }}'
@@ -68,7 +68,7 @@ def get_headers(token):
     }
 
 
-def get_body(count : int, sort_by : str, list_type : str, country : str):
+def get_body(count: int, cursor: str, sort_by: str, list_type: str, country: str):
     return {
         'operationName': 'GetTitleListV2',
         'variables': {
@@ -89,7 +89,7 @@ def get_body(count : int, sort_by : str, list_type : str, country : str):
                 'presentationTypes': [],
                 'monetizationTypes': [],
                 'subgenres': [],
-                'includeTitlesWithoutUrl' : True,
+                'includeTitlesWithoutUrl': True,
             },
             'watchNowFilter': {
                 'packages': [],
@@ -98,15 +98,51 @@ def get_body(count : int, sort_by : str, list_type : str, country : str):
             'language': 'en',
             'country': country,
             'titleListType': list_type,
-            'titleListAfterCursor': '',
+            'titleListAfterCursor': cursor,
         },
         'query': '\nquery GetTitleListV2(\n  $country: Country!\n  $titleListFilter: TitleFilter\n  $titleListSortBy: TitleListSortingV2! = LAST_ADDED\n  $titleListType: TitleListTypeV2!\n  $titleListAfterCursor: String\n    $first: Int! = 10\n  $language: Language!\n  $sortRandomSeed: Int! = 0\n      $platform: Platform! = WEB\n  $includeOffers: Boolean = false\n) {\n  titleListV2(\n    after: $titleListAfterCursor\n    country: $country\n    filter: $titleListFilter\n    sortBy: $titleListSortBy\n    first: $first\n    titleListType: $titleListType\n    sortRandomSeed: $sortRandomSeed\n  ) {\n    totalCount\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n          }\n    edges {\n      ...WatchlistTitleGraphql\n          }\n      }\n}\nfragment WatchlistTitleGraphql on TitleListEdgeV2 {\n  cursor\n  node {\n    id\n    objectId\n    objectType\n       offers(country: $country, platform: $platform)\n      @include(if: $includeOffers) {\n      id\n      presentationType\n      monetizationType\n      retailPrice(language: $language)\n      type\n      package {\n        id\n        packageId\n        clearName\n              }\n      standardWebURL\n      elementCount\n      deeplinkRoku: deeplinkURL(platform: ROKU_OS)\n          }\n   popularityRank(country: $country) {\n          rank\n  }\n    content(country: $country, language: $language) {\n      title\n     runtime\n    genres {\n            shortName\n         }\n     credits { role name }\n     productionCountries\n       originalReleaseYear\n      shortDescription\n      scoring {\n        imdbScore\n        imdbVotes\n        tmdbScore\n        tmdbPopularity\n      jwRating\n        }\n                      }\n      }\n  }\n\n\n',
     }
 
 
+def get_hindi_list_body(count: int, cursor: str, country: str):
+
+    body = {
+        'operationName': 'GetGenericList',
+        'variables': {
+            'sortBy': 'NATURAL',
+            'sortRandomSeed': 0,
+            'platform': 'WEB',
+            'listId': 'tl-us-2c7df96d-d4a2-42ca-9b5f-4b098c569d1a',
+            'titleListAfterCursor': cursor,
+            'country': country,
+            'language': 'en',
+            'first': count,
+            'filter': {
+                'ageCertifications': [],
+                'excludeGenres': [],
+                'excludeProductionCountries': [],
+                'objectTypes': [],
+                'productionCountries': [],
+                'subgenres': [],
+                'genres': [],
+                'packages': [],
+                'excludeIrrelevantTitles': False,
+                'presentationTypes': [],
+                'monetizationTypes': [],
+                'includeTitlesWithoutUrl': True,
+            },
+            'watchNowFilter': {
+                'packages': [],
+                'monetizationTypes': [],
+            },
+        },
+        'query': 'query GetGenericList($listId: ID!, $country: Country!, $language: Language!, $first: Int!, $filter: TitleFilter!, $sortBy: GenericTitleListSorting! = POPULAR, $sortRandomSeed: Int! = 0, $watchNowFilter: WatchNowOfferFilter!, $titleListAfterCursor: String, $platform: Platform! = WEB, $profile: PosterProfile, $backdropProfile: BackdropProfile, $format: ImageFormat) {\n  listDetails: node(id: $listId) {\n    ...ListDetails\n    __typename\n  }\n  genericTitleList(\n    id: $listId\n    country: $country\n    after: $titleListAfterCursor\n    first: $first\n    filter: $filter\n    sortBy: $sortBy\n    sortRandomSeed: $sortRandomSeed\n  ) {\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      __typename\n    }\n    totalCount\n    edges {\n      node {\n        ...GenericListTitle\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment ListDetails on GenericTitleList {\n  id\n  name\n  type\n  ownedByUser\n  followedlistEntry {\n    createdAt\n    name\n    __typename\n  }\n  __typename\n}\n\nfragment GenericListTitle on MovieOrShow {\n  id\n  objectId\n  objectType\n  content(country: $country, language: $language) {\n    title\n   originalReleaseYear\n    fullPath\n    scoring {\n      imdbScore\n      __typename\n    }\n    posterUrl(profile: $profile, format: $format)\n    ... on ShowContent {\n      backdrops(profile: $backdropProfile, format: $format) {\n        backdropUrl\n        __typename\n      }\n      __typename\n    }\n    isReleased\n    __typename\n  }\n  likelistEntry {\n    createdAt\n    __typename\n  }\n  dislikelistEntry {\n    createdAt\n    __typename\n  }\n  watchlistEntryV2 {\n    createdAt\n    __typename\n  }\n  customlistEntries {\n    createdAt\n    __typename\n  }\n  watchNowOffer(country: $country, platform: $platform, filter: $watchNowFilter) {\n    id\n    standardWebURL\n    package {\n      id\n      packageId\n      clearName\n      __typename\n    }\n    retailPrice(language: $language)\n    retailPriceValue\n    lastChangeRetailPriceValue\n    currency\n    presentationType\n    monetizationType\n    availableTo\n    __typename\n  }\n  ... on Movie {\n    seenlistEntry {\n      createdAt\n      __typename\n    }\n    __typename\n  }\n  ... on Show {\n    seenState(country: $country) {\n      seenEpisodeCount\n      progress\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n',
+    }
+
+    return body
 
 
-def expand_genre(genre : str):
+def expand_genre(genre: str):
     match genre:
         case "drm":
             return "Drama"

@@ -4,7 +4,7 @@ import json
 from utils import get_refresh_token_curl, get_access_token_curl, get_headers, get_body
 from justwatch_spider.items import TitleItem
 
-COUNT = 165
+COUNT = 150
 COUNTRY = "IN"
 
 class ScrapeSpiderSpider(scrapy.Spider):
@@ -39,16 +39,17 @@ class ScrapeSpiderSpider(scrapy.Spider):
         for sort_by, list_type in (("RELEASE_YEAR", "WATCHLIST"), ("LAST_ADDED", "SEENLIST")):
 
             headers = get_headers(access_token)
-            json_data = get_body(COUNT, sort_by, list_type, COUNTRY)
+            json_data = get_body(COUNT, "", sort_by, list_type, COUNTRY)
 
             body = json.dumps(json_data)
 
-            yield scrapy.Request(method='POST', body = body, headers=headers, url= 'https://apis.justwatch.com/graphql', callback = self.parse, cb_kwargs= {"list_type" : list_type})
+            yield scrapy.Request(method='POST', body = body, headers=headers, url= 'https://apis.justwatch.com/graphql', callback = self.parse, cb_kwargs= {"list_type" : list_type, "access_token": access_token, "sort_by" : sort_by})
 
 
     def parse(self, response, **kwargs):
-        data = response.json()
+        list_type = kwargs["list_type"]
 
+        data = response.json()
 
         for e in data["data"]["titleListV2"]["edges"]:
 
@@ -68,6 +69,20 @@ class ScrapeSpiderSpider(scrapy.Spider):
             title["tmdb_popularity"] = e["node"]["content"]["scoring"]["tmdbPopularity"]
             title["credits"] = e["node"]["content"]["credits"]
             title["countries"] = e["node"]["content"]["productionCountries"]
-            title["list_type"] = kwargs["list_type"]
+            title["list_type"] = list_type 
 
             yield title
+
+
+        next_page = data["data"]["titleListV2"]["pageInfo"]["hasNextPage"]
+        if next_page:
+            access_token = kwargs['access_token']
+            sort_by = kwargs["sort_by"]
+
+            cur = data["data"]["titleListV2"]["pageInfo"]["endCursor"]
+
+            headers = get_headers(access_token)
+            json_data = get_body(COUNT, cur, sort_by, list_type, COUNTRY)
+            body = json.dumps(json_data)
+
+            yield scrapy.Request(method='POST', body = body, headers=headers, url= 'https://apis.justwatch.com/graphql', callback = self.parse, cb_kwargs= {"list_type" : list_type, "access_token": access_token, "sort_by" : sort_by})
