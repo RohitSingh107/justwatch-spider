@@ -4,7 +4,7 @@ import json
 from utils import get_hindi_list_body
 
 
-COUNT = 165
+COUNT = 150
 COUNTRY = "IN"
 
 class HindiListSpider(scrapy.Spider):
