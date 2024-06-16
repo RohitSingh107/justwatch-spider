@@ -43,7 +43,6 @@ class SortingSpiderSpider(scrapy.Spider):
 
     def parse(self, response, **kwargs):
         sort_by = kwargs["sort_by"]
-        access_token = kwargs['access_token']
 
         data = response.json()
         for e in data["data"]["titleListV2"]["edges"]:
@@ -51,6 +50,7 @@ class SortingSpiderSpider(scrapy.Spider):
 
         next_page = data["data"]["titleListV2"]["pageInfo"]["hasNextPage"]
         if next_page:
+            access_token = kwargs['access_token']
             cur = data["data"]["titleListV2"]["pageInfo"]["endCursor"]
             c = get_sorting_curl(access_token, cur, COUNT, sort_by, COUNTRY)
             yield scrapy.Request.from_curl(curl_command=c, callback=self.parse, cb_kwargs={"sort_by": sort_by, "access_token": access_token})
