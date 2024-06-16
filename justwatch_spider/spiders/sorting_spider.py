@@ -1,7 +1,7 @@
 import scrapy
 from utils import get_refresh_token_curl, get_access_token_curl, get_sorting_curl
 
-COUNT = 165
+COUNT = 150
 COUNTRY = "IN"
 
 
