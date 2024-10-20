@@ -1,11 +1,9 @@
 import scrapy
 import json
 
-from utils import get_refresh_token_curl, get_access_token_curl, get_headers, get_body
+from utils import get_refresh_token_curl, get_access_token_curl, get_headers, get_body, COUNT, COUNTRY
 from justwatch_spider.items import TitleItem
 
-COUNT = 150
-COUNTRY = "IN"
 
 class ScrapeSpiderSpider(scrapy.Spider):
     name = "scrape_spider"

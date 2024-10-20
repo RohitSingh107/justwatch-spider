@@ -1,8 +1,5 @@
 import scrapy
-from utils import get_refresh_token_curl, get_access_token_curl, get_sorting_curl
-
-COUNT = 150
-COUNTRY = "IN"
+from utils import get_refresh_token_curl, get_access_token_curl, get_sorting_curl, COUNTRY, COUNT
 
 
 class SortingSpiderSpider(scrapy.Spider):

@@ -1,11 +1,8 @@
 import scrapy
 import json
 
-from utils import get_hindi_list_body
+from utils import get_hindi_list_body, COUNT, COUNTRY
 
-
-COUNT = 150
-COUNTRY = "IN"
 
 class HindiListSpider(scrapy.Spider):
     name = "hindi_list"
