@@ -2,7 +2,7 @@ SELECT
     year,
     count(*)
 FROM
-    seenlist
+    watchlist
 GROUP BY
     year
 ORDER BY
