@@ -95,4 +95,6 @@ FEED_EXPORT_ENCODING = "utf-8"
 
 
 
-
+LOG_ENABLED = True
+LOG_LEVEL = 'WARNING' # Levels: CRITICAL, ERROR, WARNING, INFO, DEBUG
+# LOG_FILE = 'logfile.log'
