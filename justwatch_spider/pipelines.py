@@ -216,6 +216,8 @@ class SavingWatchListToPostgresPipeline(object):
             self.cur.execute(f"INSERT INTO seenlist VALUES ('{item["id"]}', '{item["title"].replace("'", "''")}', {item["runtime"]}, {item["year"]}, '{item["object_type"]}', {serialize_null(item["imdb_score"])}, {serialize_null(item["imdb_votes"])}, {serialize_null(item["tmdb_score"])}, {item["tmdb_popularity"]}, {item["popularity_rank"]}, {serialize_null(item["jw_rating"])});")
 
         for country in item["countries"]:
+            if country.lower() == 'su':
+                country = 'ru'
             self.cur.execute(f"INSERT INTO countries VALUES ('{country}', '{pycountry.countries.lookup(country).name}') ON CONFLICT (id) DO NOTHING;")
             self.cur.execute(f"INSERT INTO movie_countries VALUES('{country}', '{item["id"]}', '{item["list_type"]}') ON CONFLICT (country_id, movie) DO NOTHING;")
 
