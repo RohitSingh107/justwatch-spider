@@ -3,7 +3,8 @@ from secret import API_KEY, EMAIL, PASSWORD
 # From curl is not a good idea because of {} and syntax errors
 
 COUNT = 150
-COUNTRY = "IN"
+# COUNTRY = "IN"
+COUNTRY = "US"
 
 
 def get_refresh_token_curl():
