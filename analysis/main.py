@@ -7,7 +7,7 @@ from compute_lists import average_rank, combined_ranks_unweighted, combined_rank
 
 async def main():
 
-    async with await psycopg.AsyncConnection.connect(host="localhost", dbname="postgres", user="rohits") as aconn:
+    async with await psycopg.AsyncConnection.connect(host="localhost", dbname="postgres", user="rohit") as aconn:
 
         acur1 = aconn.cursor()
         acur2 = aconn.cursor()

@@ -18,7 +18,7 @@ class SavingSortingsToPostgresPipeline(object):
 
     def __init__(self):
         self.conn = psycopg2.connect(
-            host="localhost", database="postgres", user="rohits"
+            host="localhost", database="postgres", user="rohit"
         )
 
         ## Create cursor, used to execute commands
@@ -90,7 +90,7 @@ class SavingWatchListToPostgresPipeline(object):
 
     def __init__(self):
         self.conn = psycopg2.connect(
-            host="localhost", database="postgres", user="rohits"
+            host="localhost", database="postgres", user="rohit"
         )
 
         ## Create cursor, used to execute commands
@@ -250,7 +250,7 @@ class SavingHindiListToPostgresPipeline(object):
 
     def __init__(self):
         self.conn = psycopg2.connect(
-            host="localhost", database="postgres", user="rohits"
+            host="localhost", database="postgres", user="rohit"
         )
 
         ## Create cursor, used to execute commands
