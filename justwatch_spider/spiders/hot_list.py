@@ -4,19 +4,19 @@ import json
 from utils import get_my_list_body, COUNT, COUNTRY
 
 
-class HindiListSpider(scrapy.Spider):
-    name = "hindi_list"
+class HotListSpider(scrapy.Spider):
+    name = "hot_list"
     allowed_domains = ["apis.justwatch.com"]
 
     custom_settings = {
         'ITEM_PIPELINES': {
-            'justwatch_spider.pipelines.SavingHindiListToPostgresPipeline': 350
+            'justwatch_spider.pipelines.SavingHotListToPostgresPipeline': 350
         }
     }
 
     def start_requests(self):
 
-        body = get_my_list_body('tl-us-2c7df96d-d4a2-42ca-9b5f-4b098c569d1a', COUNT, "", COUNTRY)
+        body = get_my_list_body("tl-us-69316e22-d6dd-481a-bf15-7b434f1b80e9", COUNT, "", COUNTRY)
 
         yield scrapy.Request(method='POST', body= json.dumps(body), headers={'content-type': 'application/json'}, url='https://apis.justwatch.com/graphql', callback=self.parse)
 

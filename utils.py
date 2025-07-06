@@ -108,7 +108,7 @@ def get_body(count: int, cursor: str, sort_by: str, list_type: str, country: str
     }
 
 
-def get_hindi_list_body(count: int, cursor: str, country: str):
+def get_my_list_body(list_id, count: int, cursor: str, country: str):
 
     body = {
         'operationName': 'GetGenericList',
@@ -116,7 +116,7 @@ def get_hindi_list_body(count: int, cursor: str, country: str):
             'sortBy': 'NATURAL',
             'sortRandomSeed': 0,
             'platform': 'WEB',
-            'listId': 'tl-us-2c7df96d-d4a2-42ca-9b5f-4b098c569d1a',
+            'listId': list_id,
             'titleListAfterCursor': cursor,
             'country': country,
             'language': 'en',

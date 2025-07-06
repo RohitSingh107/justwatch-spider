@@ -278,3 +278,38 @@ class SavingHindiListToPostgresPipeline(object):
         # # Close cursor & connection to database
         self.cur.close()
         self.conn.close()
+
+
+
+class SavingHotListToPostgresPipeline(object):
+
+    def __init__(self):
+        self.conn = psycopg2.connect(
+            host="localhost", database="postgres", user="rohit"
+        )
+
+        ## Create cursor, used to execute commands
+        self.cur = self.conn.cursor()
+
+        # Drop existing data
+        self.cur.execute("DROP TABLE IF EXISTS hot_list;")
+
+        ## Create table
+        self.cur.execute("""
+        CREATE TABLE hot_list(
+            title TEXT PRIMARY KEY
+        );
+        """)
+        self.conn.commit()
+
+
+    def process_item(self, item, spider):
+
+        self.cur.execute(f"INSERT INTO hot_list (title) VALUES ('{item["TITLE"].replace("'", "''")}');")
+        self.conn.commit()
+        return item
+
+    def close_spider(self, spider):
+        # # Close cursor & connection to database
+        self.cur.close()
+        self.conn.close()
