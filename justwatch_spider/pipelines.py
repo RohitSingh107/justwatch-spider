@@ -35,6 +35,7 @@ class SavingSortingsToPostgresPipeline(object):
         self.cur.execute("""
         CREATE TABLE sorted_by_imdb_score(
             rank SERIAL PRIMARY KEY, 
+            id TEXT,
             title TEXT,
             year INTEGER
         );
@@ -43,6 +44,7 @@ class SavingSortingsToPostgresPipeline(object):
         self.cur.execute("""
         CREATE TABLE sorted_by_popularity(
             rank SERIAL PRIMARY KEY, 
+            id TEXT,
             title TEXT,
             year INTEGER
         );
@@ -51,6 +53,7 @@ class SavingSortingsToPostgresPipeline(object):
         self.cur.execute("""
         CREATE TABLE sorted_by_tmdb_popularity(
             rank SERIAL PRIMARY KEY, 
+            id TEXT,
             title TEXT,
             year INTEGER
         );
@@ -62,13 +65,13 @@ class SavingSortingsToPostgresPipeline(object):
     def process_item(self, item, spider):
 
         if item["SORTED BY"] == "IMDB_SCORE":
-            self.cur.execute(f"INSERT INTO sorted_by_imdb_score (title, year) VALUES ('{item["TITLE"].replace("'", "''")}', '{item["YEAR"]}');")
+            self.cur.execute(f"INSERT INTO sorted_by_imdb_score (id, title, year) VALUES ('{item["ID"]}', '{item["TITLE"].replace("'", "''")}', '{item["YEAR"]}');")
 
         if item["SORTED BY"] == "POPULAR":
-            self.cur.execute(f"INSERT INTO sorted_by_popularity (title, year) VALUES ('{item["TITLE"].replace("'", "''")}', '{item["YEAR"]}');")
+            self.cur.execute(f"INSERT INTO sorted_by_popularity (id, title, year) VALUES ('{item["ID"]}', '{item["TITLE"].replace("'", "''")}', '{item["YEAR"]}');")
 
         if item["SORTED BY"] == "TMDB_POPULARITY":
-            self.cur.execute(f"INSERT INTO sorted_by_tmdb_popularity (title, year) VALUES ('{item["TITLE"].replace("'", "''")}', '{item["YEAR"]}');")
+            self.cur.execute(f"INSERT INTO sorted_by_tmdb_popularity (id, title, year) VALUES ('{item["ID"]}', '{item["TITLE"].replace("'", "''")}', '{item["YEAR"]}');")
 
 
         self.conn.commit()

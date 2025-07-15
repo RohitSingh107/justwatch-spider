@@ -13,10 +13,10 @@ Ballerina 2025
 Rascal Does Not Dream of Bunny Girl Senpai 2018
 The Ugly Stepsister 2025
 Dr. STONE 2019 (Hindi)
-Ne Zha 2019
 Groundhog Day 1993 (Hindi)
-The Time Traveler's Wife 2022
+Ne Zha 2019
 Materialists 2025
+The Time Traveler's Wife 2022
 American Pie 1999 (Hindi)
 Baby Reindeer 2024 (Hindi)
 The Devil Wears Prada 2006
@@ -42,9 +42,9 @@ Drop 2025 (Hindi)
 Caliphate 2020
 Corpse Bride 2005
 Migration 2023 (Hindi)
+When Evil Lurks 2023 (Hindi)
 The Shape of Water 2017 (Hindi)
 The Platform 2019 (Hindi)
-When Evil Lurks 2023 (Hindi)
 Mamma Mia! 2008 (Hindi)
 Scam 1992: The Harshad Mehta Story 2020 (Hindi)
 Until Dawn 2025 (Hindi)
@@ -55,19 +55,19 @@ Crazy Rich Asians 2018 (Hindi)
 Your Monster 2024
 A Widow's Game 2025 (Hindi)
 The Playboy Murders 2023
-Easy A 2010
 The Railway Men - The Untold Story of Bhopal 1984 2023 (Hindi)
 Last Night in Soho 2021 (Hindi)
-MaXXXine 2024
+Easy A 2010
 All We Imagine as Light 2024
+MaXXXine 2024
 Don't Look Up 2021 (Hindi)
 Cells at Work! 2018
 Super Pumped 2022
 Don't Come Home 2024 (Hindi)
 Napoleon 2023 (Hindi)
+Martyrs 2008
 The Favourite 2018 (Hindi)
 Ocean's Eight 2018
-Martyrs 2008
 Hellbound 2021 (Hindi)
 Red One 2024 (Hindi)
 October Sky 1999 (Hindi)
@@ -78,29 +78,29 @@ Room 2015 (Hindi)
 Tourist Family 2025 (Hindi)
 The Last Showgirl 2024
 AMERICA'S SWEETHEARTS: Dallas Cowboys Cheerleaders 2024 (Hindi)
-The Voyeurs 2021
 Turning Point: The Vietnam War 2025 (Hindi)
+The Voyeurs 2021
 Piece by Piece 2024
 The Reader 2008
-Tootsie 1982
-Cinderella 2015 (Hindi)
-Nymphomaniac: Vol. II 2013
 My Fault: London 2025 (Hindi)
-Investigation Alien 2024 (Hindi)
+Nymphomaniac: Vol. II 2013
+Cinderella 2015 (Hindi)
 Brotherhood of the Wolf 2001
+Investigation Alien 2024 (Hindi)
+Jai Bhim 2021 (Hindi)
 First Man 2018 (Hindi)
 Love 2015
-Jai Bhim 2021 (Hindi)
 TAYLOR SWIFT | THE ERAS TOUR 2023
 Ziam 2025 (Hindi)
 Valerian and the City of a Thousand Planets 2017 (Hindi)
 Benedetta 2021
 Happy Death Day 2017 (Hindi)
-Under the Skin 2013 (Hindi)
-Summer of 69 2025 (Hindi)
 Our Oceans 2024 (Hindi)
-Closer 2004
+Under the Skin 2013 (Hindi)
 Red Sparrow 2018 (Hindi)
+Summer of 69 2025 (Hindi)
+Tootsie 1982
+Closer 2004
 Thank You, Next 2024 (Hindi)
 Unfaithful 2002
 She's the Man 2006 (Hindi)
@@ -124,8 +124,8 @@ Grave of the Fireflies 1988
 Mira 2022 (Hindi)
 Mommy 2014
 Gokuraku Sento Busty Hot Water Momi 2011
-Nymphomaniac: Vol. I 2013
 Alice in Wonderland 2010 (Hindi)
+Nymphomaniac: Vol. I 2013
 Joker: Folie à Deux 2024
 Notes on a Scandal 2006
 La Dolce Villa 2025 (Hindi)
@@ -144,9 +144,9 @@ Sex and Lucía 2001
 Buy Now! The Shopping Conspiracy 2024 (Hindi)
 The Calendar Killer 2025 (Hindi)
 MILF Manor 2023
+Sub Rosa 2014
 In Secret 2013
 Haider 2014 (Hindi)
-Sub Rosa 2014
 Lisa Frankenstein 2024 (Hindi)
 Back to Black 2024 (Hindi)
 Indecent Proposal 1993 (Hindi)
@@ -161,7 +161,6 @@ Bad Genius 2017
 Haseen Dillruba 2021 (Hindi)
 The House Bunny 2008 (Hindi)
 Time Cut 2024 (Hindi)
-The School for Good and Evil 2022 (Hindi)
 The Whistleblower 2010 (Hindi)
 The Antisocial Network: Memes to Mayhem 2024 (Hindi)
 Humane 2024
@@ -171,13 +170,13 @@ Baise-moi 2000
 Munjya 2024 (Hindi)
 U Turn 1997
 Unsane 2018 (Hindi)
-The Love Witch 2016
 Our Little Secret 2024 (Hindi)
 I Spit on Your Grave 2 2013 (Hindi)
+The Love Witch 2016
 Shaitaan 2024 (Hindi)
 Kamikaze Girls 2004
-Savages 2012 (Hindi)
 Hot Girls Wanted 2015
+Savages 2012 (Hindi)
 Swallow 2020
 Talk to Her 2002
 Fifty Shades Freed 2018 (Hindi)
@@ -186,18 +185,18 @@ Shiddat 2021 (Hindi)
 Soldier's Girl 2003
 Americana 2025
 Bad Sister 2015
-Colors of Evil: Red 2024 (Hindi)
 The Hot Chick 2002
+Colors of Evil: Red 2024 (Hindi)
 Adore 2013
 Power of Paanch 2025 (Hindi)
 Lunana: A Yak in the Classroom 2019 (Hindi)
 Spice Up Our Love 2024 (Hindi)
-Fifty Shades Darker 2017 (Hindi)
 T-34 2018 (Hindi)
-Descendants: The Rise of Red 2024
 The Brown Bunny 2003
-The Manhattan Alien Abduction 2024 (Hindi)
+Descendants: The Rise of Red 2024
+Fifty Shades Darker 2017 (Hindi)
 Nine 1/2 Weeks 1986
+The Manhattan Alien Abduction 2024 (Hindi)
 I Could Never Be Your Woman 2007 (Hindi)
 The Human Centipede (First Sequence) 2009
 Queen Cleopatra 2023
@@ -225,19 +224,19 @@ Two Night Stand 2014 (Hindi)
 The Wrong Track 2025 (Hindi)
 A Tribe Called Judah 2023
 Vikrant Rona 2022 (Hindi)
-Hot Frosty 2024 (Hindi)
 Ava 2020
+Hot Frosty 2024 (Hindi)
 Little Bites 2024
 Madaari 2016 (Hindi)
 Fashion 2008 (Hindi)
-Werewolf 2017
-Disappear Completely 2024
 Sosyal Climbers 2025 (Hindi)
+Disappear Completely 2024
+Werewolf 2017
+Hostel: Part II 2007 (Hindi)
 Death Before the Wedding 2025 (Hindi)
 Bhoothakaalam 2022
-Hostel: Part II 2007 (Hindi)
-Welcome Home 2020 (Hindi)
 Art of Love 2024 (Hindi)
+Welcome Home 2020 (Hindi)
 NH 10 2015 (Hindi)
 The Eyes of My Mother 2016
 Antonia's Line 1995
@@ -265,24 +264,24 @@ Maharaj 2024 (Hindi)
 Cam 2018
 Prime 2005
 Two Autumns in Paris 2020
-Helter Skelter 2012
 Terminal 2018
-Black Barbie: A Documentary 2024 (Hindi)
+Helter Skelter 2012
 Adire 2023
+Black Barbie: A Documentary 2024 (Hindi)
 The Plan Man 2014 (Hindi)
 Chéri 2009
 Young Mother 3 2015
-The Playboy Club 2011
 Miss Congeniality 2: Armed and Fabulous 2005
-Shameless 2012
+The Playboy Club 2011
 How Stella Got Her Groove Back 1998
+Shameless 2012
 Female Teacher Closing the Door 2021
 Hell Torture 2023
 Different for Girls 1996
 Everybody Loves Touda 2024
 Hello I Must Be Going 2012
-Ada Omo Daddy 2023
 Scorpio Nights 3 2022
+Ada Omo Daddy 2023
 Pet 2016
 Katie's Mom 2025
 The Diary 2024 (Hindi)
@@ -302,22 +301,22 @@ IB 71 2023 (Hindi)
 Nekromantik 1988
 Four Lovers 2010
 The Pet 2006
-The Archies 2023 (Hindi)
 Jonah Hex 2010 (Hindi)
+The Archies 2023 (Hindi)
 The House 2022
 Milf 2010
 Bits & Pieces 1996
 Mostly Sunny 2017
 The Ceremony 2015
 The House of Pleasure 1994
-My Mistress 2014
 Concrete 2004
+My Mistress 2014
 Infidelity in Suburbia 2017
 Fukrey 3 2023 (Hindi)
 Bula 2022
 Fruits of Passion 1981
-Blink 2024 (Hindi)
 Poison Ivy: The New Seduction 1997 (Hindi)
+Blink 2024 (Hindi)
 A Burning Hot Summer 2011
 Flower & Snake 1974
 Gemini 2005
@@ -329,8 +328,8 @@ Agra 2023 (Hindi)
 Chained Heat 2001: Slave Lovers 2001
 Chestnut 2024 (Hindi)
 The Secret Weapon 2021 (Hindi)
-Dating the Enemy 1996
 May-December-January 2022
+Dating the Enemy 1996
 Poison Ivy 2: Lily 1996 (Hindi)
 Children of the Salt 2017
 Plank Face 2016

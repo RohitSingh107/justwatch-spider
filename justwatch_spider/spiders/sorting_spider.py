@@ -43,7 +43,7 @@ class SortingSpiderSpider(scrapy.Spider):
 
         data = response.json()
         for e in data["data"]["titleListV2"]["edges"]:
-            yield {"TITLE": e["node"]["content"]["title"], "YEAR":  e["node"]["content"]["originalReleaseYear"], "SORTED BY": sort_by}
+            yield {"ID": e["node"]["id"], "TITLE": e["node"]["content"]["title"], "YEAR":  e["node"]["content"]["originalReleaseYear"], "SORTED BY": sort_by}
 
         next_page = data["data"]["titleListV2"]["pageInfo"]["hasNextPage"]
         if next_page:
