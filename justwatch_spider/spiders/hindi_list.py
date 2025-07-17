@@ -1,7 +1,7 @@
 import scrapy
 import json
 
-from utils import get_my_list_body, COUNT, COUNTRY
+from utils import get_my_list_body, COUNT, COUNTRY, HINDI_LIST_ID
 
 
 class HindiListSpider(scrapy.Spider):
@@ -16,7 +16,7 @@ class HindiListSpider(scrapy.Spider):
 
     def start_requests(self):
 
-        body = get_my_list_body('tl-us-2c7df96d-d4a2-42ca-9b5f-4b098c569d1a', COUNT, "", COUNTRY)
+        body = get_my_list_body(HINDI_LIST_ID, COUNT, "", COUNTRY)
 
         yield scrapy.Request(method='POST', body= json.dumps(body), headers={'content-type': 'application/json'}, url='https://apis.justwatch.com/graphql', callback=self.parse)
 
@@ -30,5 +30,5 @@ class HindiListSpider(scrapy.Spider):
         if next_page:
             cur = data["data"]["genericTitleList"]["pageInfo"]["endCursor"]
 
-            body = get_my_list_body('tl-us-2c7df96d-d4a2-42ca-9b5f-4b098c569d1a', COUNT, cur, COUNTRY)
+            body = get_my_list_body(HINDI_LIST_ID, COUNT, cur, COUNTRY)
             yield scrapy.Request(method='POST', body= json.dumps(body), headers={'content-type': 'application/json'}, url='https://apis.justwatch.com/graphql', callback=self.parse)

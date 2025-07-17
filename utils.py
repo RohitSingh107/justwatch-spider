@@ -6,6 +6,9 @@ COUNT = 150
 # COUNTRY = "IN"
 COUNTRY = "US"
 
+HOT_LIST_ID = "tl-us-69316e22-d6dd-481a-bf15-7b434f1b80e9"
+HINDI_LIST_ID = "tl-us-2c7df96d-d4a2-42ca-9b5f-4b098c569d1a"
+
 
 def get_refresh_token_curl():
     return f"""
