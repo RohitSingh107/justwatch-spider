@@ -23,6 +23,7 @@ class HotListSpider(scrapy.Spider):
 
     def parse(self, response, **kwargs):
         data = response.json()
+        
         for e in data["data"]["genericTitleList"]["edges"]:
             yield { "TITLE" : e["node"]["content"]["title"] + ' ' + str(e["node"]["content"]["originalReleaseYear"])}
 
